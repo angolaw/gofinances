@@ -13,12 +13,14 @@ export const UserWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-top: ${getStatusBarHeight()+RFValue(28)}px;
+
 `
 export const Header = styled.View`
   width:100%;
   height: ${RFPercentage(42)}px;
   background-color: ${({theme}) => theme.colors.primary};
-  padding-top: ${getStatusBarHeight()}px;
+  
 
 `
 export const UserInfo = styled.View`
@@ -56,5 +58,18 @@ export const HighlightCards = styled.ScrollView.attrs({
       showsHorizontalScrollIndicator:false,
       contentContainerStyle: {paddingHorizontal:24} 
 })`
+  width: 100%;
+  position: absolute;
+  margin-top: ${RFPercentage(20)}px;
+
+`;
+export const Transactions = styled.ScrollView.attrs({
+      horizontal:true,
+      showsHorizontalScrollIndicator:false,
+      contentContainerStyle: {paddingHorizontal:24} 
+})`
+  width: 100%;
+  position: absolute;
+  margin-top: ${RFPercentage(20)}px;
 
 `;
