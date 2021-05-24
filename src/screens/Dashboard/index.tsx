@@ -1,7 +1,8 @@
 import React from 'react'
-import { Container, Header, Photo, UserInfo, User, UserName, UserGreeting, UserWrapper, Icon, HighlightCards, Transactions } from './styles'
+import { Container, Header, Photo, UserInfo, User, UserName, UserGreeting, UserWrapper, Icon, HighlightCards, Transactions, Title } from './styles'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { HighlightCard } from '../../components/HighlightCard'
+import { TransactionCard } from '../../components/TransactionCard'
 export function Dashboard(){
   return (
     <Container>
@@ -24,7 +25,23 @@ export function Dashboard(){
       </HighlightCards>
 
       <Transactions>
-        
+          <Title>Listagem</Title>
+          <TransactionCard 
+            type="income" 
+            title="Desensolvimento de App" 
+            amount={'R$ 20.000,00'} 
+            categoryName="Venda" 
+            date="13/05/2021" 
+            icon="dollar-sign" 
+          />
+            <TransactionCard 
+            type="outcome" 
+            title="Investimentos" 
+            amount={'R$ 2.000,00'} 
+            categoryName="Ações" 
+            date="13/05/2021" 
+            icon="arrow-down-circle" 
+          />
       </Transactions>
 
     </Container>
