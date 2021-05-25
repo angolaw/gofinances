@@ -45,7 +45,8 @@ export const CategoryName = styled.Text`
     color: ${({theme}) => theme.colors.text};
     padding-right: ${RFValue(45)}px ;
     font-size: ${RFValue(14)}px;
-    line-height:${RFValue(21)}px
+    line-height:${RFValue(21)}px;
+    margin-left: 16px;
 
 `;
 export const Date = styled.Text`
