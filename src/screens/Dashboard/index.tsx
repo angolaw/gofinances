@@ -3,6 +3,7 @@ import { Container, Header, Photo, UserInfo, User, UserName, UserGreeting, UserW
 import { RFValue } from 'react-native-responsive-fontsize'
 import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard } from '../../components/TransactionCard'
+import { getBottomSpace } from 'react-native-iphone-x-helper'
 export function Dashboard(){
   const data = [
     {
@@ -45,6 +46,8 @@ export function Dashboard(){
           <TransactionList
             data={data}
             keyExtractor={(item) => item.title}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{paddingBottom: getBottomSpace()}}
             renderItem={({item}) => <TransactionCard data={item} />}
             
           />
