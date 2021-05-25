@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Title, Amount, Footer,Icon, Category, CategoryName,Date } from './styles'
 import { Text } from 'react-native'
 
-interface TransactionCardProps {
+export interface TransactionCardProps {
   data:{
     title: string;
     amount:string;

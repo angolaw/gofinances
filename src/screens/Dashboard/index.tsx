@@ -2,11 +2,16 @@ import React from 'react'
 import { Container, Header, Photo, UserInfo, User, UserName, UserGreeting, UserWrapper, Icon, HighlightCards, Transactions, Title, TransactionList } from './styles'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { HighlightCard } from '../../components/HighlightCard'
-import { TransactionCard } from '../../components/TransactionCard'
+import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
+export interface DataListProps extends TransactionCardProps{
+    id: string;
+
+}
 export function Dashboard(){
-  const data = [
+  const data: DataListProps[] = [
     {
+            id:"1",
             type:"income", 
             title:"Desenvolvimento de app", 
             amount:'R$ 25.000,00', 
@@ -14,10 +19,21 @@ export function Dashboard(){
             date:"13/05/2021", 
     },
      {
+                        id:"2",
+
             type:"outcome", 
             title:"Viagem Maldivas", 
             amount:'R$ 8.000,00', 
             category:{name: 'Gastos', icon: 'arrow-down-circle'},
+            date:"13/05/2021", 
+    },
+      {
+                                id:"3",
+    
+        type:"outcome", 
+            title:"Aluguel", 
+            amount:'R$ 1.300,00', 
+            category:{name: 'Habitação', icon: 'shopping-bag'},
             date:"13/05/2021", 
     },
   ]
@@ -45,9 +61,7 @@ export function Dashboard(){
           <Title>Listagem</Title>
           <TransactionList
             data={data}
-            keyExtractor={(item) => item.title}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{paddingBottom: getBottomSpace()}}
+            keyExtractor={item => item.id}
             renderItem={({item}) => <TransactionCard data={item} />}
             
           />
