@@ -7,11 +7,16 @@ import { Container, Header, Title,Form, Fields, TransactionTypes } from './style
 import { CategorySelectButton } from '../../components/Forms/CategorySelectButton';
 import {CategorySelect} from '../CategorySelect'
 import { useForm } from 'react-hook-form';
-
+import * as Yup from 'yup'
+import {yupResolver} from '@hookform/resolvers/yup'
 interface FormDataProps {
   name: string;
   amount:string;
 }
+const schema = Yup.object().shape({
+  name: Yup.string().required('Nome é obrigatório'),
+  amount: Yup.number().required('O valor é obrigatório').typeError('Informe o valor numérico').positive('O valor deve ser maior que zero')
+})
 export function Register(){
     const [transactionType, setTransactionType] = useState('')
     const [categoryModalShow, setCategoryModalShow] = useState(false)
@@ -36,6 +41,7 @@ export function Register(){
       if(category.key === 'category'){
         return Alert.alert('Selecione uma categoria')
       }
+
       
       
       const data = {
@@ -49,7 +55,7 @@ export function Register(){
       
 
     }
-    const {control, handleSubmit} = useForm()
+    const {control, handleSubmit, formState: {errors}} = useForm({resolver: yupResolver(schema)})
     
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
@@ -60,11 +66,15 @@ export function Register(){
           <Form>
             <Fields>
               <InputForm name="name" 
+              error={errors.name && errors.name.message}
                 autoCapitalize="sentences" 
                 autoCorrect={false} placeholder="Nome"  
                 control={control}
             />
-              <InputForm name="amount" keyboardType="numeric" placeholder="Valor"  control={control}/>
+              <InputForm 
+              error={errors.amount && errors.amount.message}
+
+              name="amount" keyboardType="numeric" placeholder="Valor"  control={control}/>
               <TransactionTypes>
                 <TransactionTypeButton 
                   isActive={transactionType === 'down'}
