@@ -1,16 +1,17 @@
 import React from 'react'
 import { TouchableOpacityProps } from 'react-native'
+import {Container, Title, Icon } from './styles'
 
 interface TransactionTypeButtonProps extends TouchableOpacityProps{
   type: 'up'|'down';
   icon:string;
   title:string;
+  isActive: boolean;
 }
 
-import {Container, Title, Icon } from './styles'
-export function TransactionTypeButton({type, icon, title, ...rest}:TransactionTypeButtonProps){
+export function TransactionTypeButton({type, icon, title,isActive, ...rest}:TransactionTypeButtonProps){
   return (
-    <Container {...rest} >
+    <Container isActive={isActive} type={type} {...rest}>
       <Icon type={type} name={icon} />
       <Title>{title}</Title>
       
