@@ -1,11 +1,17 @@
 import React, {useState} from 'react'
 import { Button } from '../../components/Forms/Button'
-import { Input } from '../../components/Forms/Input'
+import { InputForm } from '../../components/InputForm'
 import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton';
-import {Modal} from 'react-native'
+import {Keyboard, Modal, TouchableWithoutFeedback} from 'react-native'
 import { Container, Header, Title,Form, Fields, TransactionTypes } from './styles'
 import { CategorySelectButton } from '../../components/Forms/CategorySelectButton';
 import {CategorySelect} from '../CategorySelect'
+import { useForm } from 'react-hook-form';
+
+interface FormDataProps {
+  name: string;
+  amount:string;
+}
 export function Register(){
     const [transactionType, setTransactionType] = useState('')
     const [categoryModalShow, setCategoryModalShow] = useState(false)
@@ -23,16 +29,33 @@ export function Register(){
      
       
     }
+    function handleRegister(form:FormDataProps){
+      const data = {
+        name: form.name,
+        amount:form.amount,
+        transactionType,
+        category: category.key
+      }
+      console.log(data);
+      
+
+    }
+    const {control, handleSubmit} = useForm()
     
     return (
-      <Container>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
+        <Container>
           <Header>
             <Title>Compras</Title>
           </Header>
           <Form>
             <Fields>
-              <Input placeholder="Nome"/>
-              <Input placeholder="Valor"/>
+              <InputForm name="name" 
+                autoCapitalize="sentences" 
+                autoCorrect={false} placeholder="Nome"  
+                control={control}
+            />
+              <InputForm name="amount" keyboardType="numeric" placeholder="Valor"  control={control}/>
               <TransactionTypes>
                 <TransactionTypeButton 
                   isActive={transactionType === 'down'}
@@ -53,7 +76,7 @@ export function Register(){
             <CategorySelectButton onPress={handleShowModal} title={category.name} />
 
             </Fields>
-            <Button title="Enviar"/>
+            <Button title="Enviar" onPress={handleSubmit(handleRegister)} />
             
 
           </Form>
@@ -67,5 +90,6 @@ export function Register(){
 
 
       </Container>
+      </TouchableWithoutFeedback>
     )
 }
