@@ -16,6 +16,13 @@ interface CategorySelectProps{
 
 
 export function CategorySelect({category, setCategory, closeSelectCategory}:CategorySelectProps){
+
+  function handleCategorySelect(category:Category){
+    setCategory(category)
+    console.log(category.name);
+    
+  }
+
   return (
     <Container>
         <Header>
@@ -25,7 +32,10 @@ export function CategorySelect({category, setCategory, closeSelectCategory}:Cate
           keyExtractor={(category:Category) => category.key}
           ItemSeparatorComponent={() => <Separator/>}
           renderItem={({item}) => (
-            <Category>
+            <Category 
+              onPress={() => handleCategorySelect(item)}
+              isActive={item.key === category.key }
+            >
               <Icon name={item.icon} />
               <Name>{item.name}</Name>
             </Category>

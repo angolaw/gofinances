@@ -50,7 +50,7 @@ export function Register(){
                   onPress={()=> handleSelectedTransactionType('up')} 
                 />
             </TransactionTypes>
-            <CategorySelectButton onPress={handleShowModal} title="Categorias" />
+            <CategorySelectButton onPress={handleShowModal} title={category.name} />
 
             </Fields>
             <Button title="Enviar"/>
