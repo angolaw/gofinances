@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Button } from '../../components/Forms/Button'
 import { InputForm } from '../../components/InputForm'
 import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton';
-import {Keyboard, Modal, TouchableWithoutFeedback} from 'react-native'
+import {Keyboard, Modal, TouchableWithoutFeedback, Alert} from 'react-native'
 import { Container, Header, Title,Form, Fields, TransactionTypes } from './styles'
 import { CategorySelectButton } from '../../components/Forms/CategorySelectButton';
 import {CategorySelect} from '../CategorySelect'
@@ -30,6 +30,14 @@ export function Register(){
       
     }
     function handleRegister(form:FormDataProps){
+      if(!transactionType){
+        return Alert.alert('Escolha o tipo de transação')
+      }
+      if(category.key === 'category'){
+        return Alert.alert('Selecione uma categoria')
+      }
+      
+      
       const data = {
         name: form.name,
         amount:form.amount,
@@ -37,6 +45,7 @@ export function Register(){
         category: category.key
       }
       console.log(data);
+      
       
 
     }
