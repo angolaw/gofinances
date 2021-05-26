@@ -4,7 +4,7 @@ import {FlatList} from 'react-native'
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize'
 import {getBottomSpace, getStatusBarHeight} from 'react-native-iphone-x-helper'
 import {DataListProps} from './index'
-
+import {BorderlessButton} from 'react-native-gesture-handler'
 export const Container = styled.View`
   flex:1;
   background-color: ${({theme}) => theme.colors.background};
@@ -79,3 +79,6 @@ export const TransactionList = styled(FlatList as new () => FlatList<DataListPro
      showsVerticalScrollIndicator:false,
     contentContainerStyle:{paddingBottom: getBottomSpace()}
 })``
+export const LogoutButton = styled(BorderlessButton)`
+  
+`

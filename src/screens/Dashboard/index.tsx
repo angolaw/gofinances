@@ -1,9 +1,7 @@
 import React from 'react'
-import { Container, Header, Photo, UserInfo, User, UserName, UserGreeting, UserWrapper, Icon, HighlightCards, Transactions, Title, TransactionList } from './styles'
-import { RFValue } from 'react-native-responsive-fontsize'
+import { Container, Header, Photo, UserInfo, User, UserName, UserGreeting, LogoutButton, UserWrapper, Icon, HighlightCards, Transactions, Title, TransactionList } from './styles'
 import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard'
-import { getBottomSpace } from 'react-native-iphone-x-helper'
 export interface DataListProps extends TransactionCardProps{
     id: string;
 
@@ -48,7 +46,9 @@ export function Dashboard(){
               <UserName>Willian</UserName>
             </User>
           </UserInfo>
-          <Icon name="power" />
+          <LogoutButton onPress={() =>{}}  >
+                      <Icon name="power" />
+          </LogoutButton>
         </UserWrapper>
       </Header>
       <HighlightCards  >
