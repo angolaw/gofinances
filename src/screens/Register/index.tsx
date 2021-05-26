@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Button } from '../../components/Forms/Button'
 import { Input } from '../../components/Forms/Input'
 import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton'
-import { Container, Header, Title,Form, Fields, TransactionTypeButtonContainer } from './styles'
+import { Container, Header, Title,Form, Fields, TransactionTypes } from './styles'
 
 export function Register(){
     const [transactionType, setTransactionType] = useState('')
@@ -22,7 +22,7 @@ export function Register(){
             <Fields>
               <Input placeholder="Nome"/>
               <Input placeholder="Valor"/>
-              <TransactionTypeButtonContainer>
+              <TransactionTypes>
                 <TransactionTypeButton 
                   isActive={transactionType === 'down'}
 
@@ -38,7 +38,7 @@ export function Register(){
                   icon="arrow-up-circle"  
                   onPress={()=> handleSelectedTransactionType('up')} 
                 />
-            </TransactionTypeButtonContainer>
+            </TransactionTypes>
             </Fields>
             <Button title="Enviar"/>
             

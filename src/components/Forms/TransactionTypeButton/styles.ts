@@ -23,7 +23,7 @@ export const Container = styled(TouchableOpacity)<ContainerProps>`
 
   ${({isActive, type}) => isActive && type === 'down' && css`background-color:${({theme}) => theme.colors.attention_light}` }
   ${({isActive, type}) => isActive && type === 'up' && css`background-color:${({theme}) => theme.colors.success_light}` }
-  ${({isActive, type}) => isActive && css`border:0px` }
+  ${({isActive, type}) => isActive && css`border:0` }
 
 `;
 
