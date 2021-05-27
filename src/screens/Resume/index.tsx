@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
 import { HistoryCard } from '../../components/HistoryCard'
+import { Content } from '../../components/HistoryCard/styles'
 import { categories } from '../../utils/categories'
 import { DataListProps } from '../Dashboard'
 import { dataKey } from '../Register'
@@ -60,14 +61,16 @@ export function Resume(){
         <Title>Resumo por categoria</Title>
        
       </Header>
-        {totalByCategories.map(category => (
-          <HistoryCard 
-            key={category.name}
-            amount={category.total}
-            title={category.name}
-            color={category.color}
-        />
-        ))}
+        <Content  >
+              {totalByCategories.map(category => (
+              <HistoryCard 
+                key={category.name}
+                amount={category.total}
+                title={category.name}
+                color={category.color}
+            />
+            ))}
+        </Content>
        
     </Container>
   )

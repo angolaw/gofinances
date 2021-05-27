@@ -29,4 +29,8 @@ export const Amount = styled.Text`
   color: ${({theme}) => theme.colors.title};
 `;
 
-
+export const Content = styled.ScrollView.attrs({
+  contentContainerStyle:{padding: 24, flex:1}
+})`
+  
+`;
