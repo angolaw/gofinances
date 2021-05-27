@@ -1,8 +1,19 @@
 import React from 'react'
-import { Container } from './styles'
+import { HistoryCard } from '../../components/HistoryCard'
+import { Container, Header, Title } from './styles'
 
 export function Resume(){
   return (
-    <Container/>
+    <Container>
+      <Header>
+        <Title>Resumo por categoria</Title>
+       
+      </Header>
+       <HistoryCard 
+          amount={"R$ 1500"}
+          title={"Casa"}
+          color={'#5636d3'}
+        />
+    </Container>
   )
 }
