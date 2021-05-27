@@ -1,19 +1,22 @@
 import React, {useState, useEffect, useCallback} from 'react'
-import { Container, Header, Photo, UserInfo, User, UserName, UserGreeting, LogoutButton, UserWrapper, Icon, HighlightCards, Transactions, Title, TransactionList } from './styles'
+import { Container, Header, Photo, UserInfo, User, UserName, UserGreeting, LogoutButton, UserWrapper, Icon, HighlightCards, Transactions, Title, TransactionList, LoadContainer } from './styles'
 import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { dataKey } from '../Register'
 import { useFocusEffect } from '@react-navigation/core'
+import {ActivityIndicator} from 'react-native'
+import {useTheme} from 'styled-components'
 export interface DataListProps extends TransactionCardProps{
     id: string;
 }
 export function Dashboard(){
-
+  const [isLoading, setisLoading] = useState(true)
   const [transactions, setTransactions] = useState<DataListProps[]>([])
   const [incomeSum, setIncomeSum] = useState('')
   const [outcomeSum, setOutcomeSum] = useState('')
   const [balance, setbalance] = useState('')
+  const theme = useTheme()
   const [highlightData, sethighlightData] = useState<HighlightProps>({} as HighlightProps)
   let incomeSumValue = 0
   let outComeSumValue = 0
@@ -66,6 +69,7 @@ export function Dashboard(){
         }))   
       
       setTransactions(transactionsFormatted)
+      setisLoading(false)
   }
   function calculateSums(){
   }
@@ -83,6 +87,14 @@ export function Dashboard(){
 
   return (
     <Container>
+      
+      {isLoading 
+      ? 
+      <LoadContainer>
+        <ActivityIndicator color={theme.colors.primary} />
+      </LoadContainer>
+      : 
+      <>
       <Header>
         <UserWrapper>
           <UserInfo>
@@ -112,6 +124,10 @@ export function Dashboard(){
             
           />
       </Transactions>
+      </>
+      
+      }
+      
 
     </Container>
   )
