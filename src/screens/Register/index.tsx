@@ -34,7 +34,7 @@ export function Register(){
     })
     const {control, handleSubmit, reset, formState: {errors}} = useForm({resolver: yupResolver(schema)})
     const navigation = useNavigation()
-    function handleSelectedTransactionType(type:'up' | 'down'){
+    function handleSelectedTransactionType(type:'income' | 'outcome'){
       setTransactionType(type);
       
     }
@@ -54,7 +54,7 @@ export function Register(){
         id: String(uuid.v4()),
         name: form.name,
         amount:form.amount,
-        transactionType,
+        type:transactionType,
         category: category.key,
         date: new Date()
       }
@@ -100,19 +100,19 @@ export function Register(){
               name="amount" keyboardType="numeric" placeholder="Valor"  control={control}/>
               <TransactionTypes>
                 <TransactionTypeButton 
-                  isActive={transactionType === 'down'}
+                  isActive={transactionType === 'outcome'}
 
                   type="down" 
                   title="Outcome" 
                   icon="arrow-down-circle" 
-                  onPress={()=> handleSelectedTransactionType('down')} 
+                  onPress={()=> handleSelectedTransactionType('outcome')} 
                 />
                 <TransactionTypeButton 
-                  isActive={transactionType === 'up'}
+                  isActive={transactionType === 'income'}
                   type="up" 
                   title="Income" 
                   icon="arrow-up-circle"  
-                  onPress={()=> handleSelectedTransactionType('up')} 
+                  onPress={()=> handleSelectedTransactionType('income')} 
                 />
             </TransactionTypes>
             <CategorySelectButton onPress={handleShowModal} title={category.name} />
