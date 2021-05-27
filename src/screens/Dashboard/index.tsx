@@ -14,9 +14,18 @@ export function Dashboard(){
   const [incomeSum, setIncomeSum] = useState('')
   const [outcomeSum, setOutcomeSum] = useState('')
   const [balance, setbalance] = useState('')
+  const [highlightData, sethighlightData] = useState<HighlightProps>({} as HighlightProps)
   let incomeSumValue = 0
   let outComeSumValue = 0
   let balanceValue = 0
+
+  interface HighlightProps{
+    amount:string;
+  }
+  interface HighlightData{
+    incomes: HighlightProps;
+    outcome: HighlightProps
+  }
   async function loadData(){
       const data = await AsyncStorage.getItem(dataKey)
       const transactions = data ? JSON.parse(data) : []
@@ -51,10 +60,11 @@ export function Dashboard(){
           style:'currency',
           currency: 'BRL'
         }))
-        setbalance(Number(balanceValue).toLocaleString('pt-BR',{
+      setbalance(Number(balanceValue).toLocaleString('pt-BR',{
           style:'currency',
           currency: 'BRL'
         }))   
+      
       setTransactions(transactionsFormatted)
   }
   function calculateSums(){
