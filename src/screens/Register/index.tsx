@@ -22,7 +22,7 @@ const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório'),
   amount: Yup.number().required('O valor é obrigatório').typeError('Informe o valor numérico').positive('O valor deve ser maior que zero')
 })
-        const dataKey = '@gofinances:transactions'
+export const dataKey = '@gofinances:transactions'
 
 export function Register(){
     const [transactionType, setTransactionType] = useState('')
@@ -33,7 +33,7 @@ export function Register(){
 
     })
     const {control, handleSubmit, reset, formState: {errors}} = useForm({resolver: yupResolver(schema)})
-
+    const navigation = useNavigation()
     function handleSelectedTransactionType(type:'up' | 'down'){
       setTransactionType(type);
       
@@ -41,12 +41,7 @@ export function Register(){
     function handleShowModal(){
       setCategoryModalShow(!categoryModalShow)
     }
-    // useEffect(()=>{
-    //   async function clean() {
-    //     await AsyncStorage.removeItem(dataKey)
-    //   }
-    //   clean()
-    // },[])
+  
     async function handleRegister(form:FormDataProps){
       if(!transactionType){
         return Alert.alert('Escolha o tipo de transação')
@@ -70,7 +65,6 @@ export function Register(){
           ...currentData,
           newTransaction
         ]
-        console.log(oldData, currentData);
         
         await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
         reset()
@@ -78,6 +72,7 @@ export function Register(){
         setCategory({
       key:'category',
       name: 'Categoria',})
+      navigation.navigate('Listagem')
       } catch (error) {
         console.log(error);
         Alert.alert('Nao foi possivel salvar os dados no Async')

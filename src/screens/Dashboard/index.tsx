@@ -1,39 +1,44 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Container, Header, Photo, UserInfo, User, UserName, UserGreeting, LogoutButton, UserWrapper, Icon, HighlightCards, Transactions, Title, TransactionList } from './styles'
 import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { dataKey } from '../Register'
 export interface DataListProps extends TransactionCardProps{
     id: string;
 }
 export function Dashboard(){
-  const data: DataListProps[] = [
-    {
-            id:"1",
-            type:"income", 
-            title:"Desenvolvimento de app", 
-            amount:'R$ 25.000,00', 
-            category:{name: 'Receita', icon: 'dollar-sign'},
-            date:"13/05/2021", 
-    },
-     {
-                        id:"2",
 
-            type:"outcome", 
-            title:"Viagem Maldivas", 
-            amount:'R$ 8.000,00', 
-            category:{name: 'Gastos', icon: 'arrow-down-circle'},
-            date:"13/05/2021", 
-    },
-      {
-                                id:"3",
-    
-        type:"outcome", 
-            title:"Aluguel", 
-            amount:'R$ 1.300,00', 
-            category:{name: 'Habitação', icon: 'shopping-bag'},
-            date:"13/05/2021", 
-    },
-  ]
+  const [transactions, setTransactions] = useState<DataListProps[]>([])
+  useEffect(() => {
+    async function loadData(){
+      const data = await AsyncStorage.getItem(dataKey)
+      const transactions = data ? JSON.parse(data) : []
+      const transactionsFormatted: DataListProps[] = transactions.map((item:DataListProps) =>{
+        const amount = Number(item.amount).toLocaleString('pt-BR',{
+          style:'currency',
+          currency: 'BRL'
+        })
+
+        const date = Intl.DateTimeFormat('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: '2-digit',
+        }).format(new Date(item.date))
+
+        return {
+          id: item.id,
+          name: item.name,
+          amount,
+          date,
+          type: item.type,
+          category: item.category,
+        }
+      })
+      setTransactions(transactionsFormatted)
+    }
+    loadData()
+  },[transactions])
   return (
     <Container>
       <Header>
@@ -59,7 +64,7 @@ export function Dashboard(){
       <Transactions>
           <Title>Listagem</Title>
           <TransactionList
-            data={data}
+            data={transactions}
             keyExtractor={item => item.id}
             renderItem={({item}) => <TransactionCard data={item} />}
             

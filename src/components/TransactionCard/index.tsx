@@ -1,15 +1,15 @@
 import React from 'react'
 import { Container, Title, Amount, Footer,Icon, Category, CategoryName,Date } from './styles'
 import { Text } from 'react-native'
-
+import {format, parse} from 'date-fns'
 export interface TransactionCardProps {
-  data:{
-    title: string;
+
+    name: string;
     amount:string;
     type: 'income' | 'outcome';
     date: string;
     category: Category;
-  }
+  
 }
 
 interface Category{
@@ -17,20 +17,20 @@ interface Category{
   icon:string;
 }
 
-export function TransactionCard({data}:TransactionCardProps){
+export function TransactionCard({name,amount, type,date,category}:TransactionCardProps){
   return (
     <Container>
-        <Title>{data.title}</Title>
-        <Amount type={data.type} >
-          {data.type === 'outcome' && '-'} 
-          {data.amount}
+        <Title>{name}</Title>
+        <Amount type={type} >
+          {type === 'outcome' && '-'} 
+          {amount}
         </Amount>
         <Footer>
             <Category>
-              <Icon name={data.category.icon} />
-              <CategoryName>{data.category.name}</CategoryName>
+              <Icon name={category.icon} />
+              <CategoryName>{category.name}</CategoryName>
             </Category>
-            <Date>{data.date}</Date>
+            <Date>{date}</Date>
 
         </Footer>
     </Container>
