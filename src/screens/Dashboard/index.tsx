@@ -74,14 +74,15 @@ export function Dashboard(){
         
       setTransactions(transactionsFormatted)
       //get last income transaction date
-      const resultIncome: DataListProps = transactions.filter((transaction:DataListProps) => transaction.type === 'income').reduce((a:DataListProps,b:DataListProps) => (a.date > b.date ? a : b))
-      const lastIncome = formatDistanceToNow(parseISO(resultIncome.date))
-      setlastIncome(lastIncome)
-      const resultOutcome: DataListProps = transactions.filter((transaction:DataListProps) => transaction.type === 'outcome').reduce((a:DataListProps,b:DataListProps) => (a.date > b.date ? a : b))
-      const lastOutcome = formatDistanceToNow(parseISO(resultOutcome.date))
-      setlastOutcome(lastOutcome)
+      if(transactions!== null){
+        const resultIncome: DataListProps = transactions.filter((transaction:DataListProps) => transaction.type === 'income').reduce((a:DataListProps,b:DataListProps) => (a.date > b.date ? a : b))
+        const lastIncome = formatDistanceToNow(parseISO(resultIncome.date))
+        setlastIncome(lastIncome)
+        const resultOutcome: DataListProps = transactions.filter((transaction:DataListProps) => transaction.type === 'outcome').reduce((a:DataListProps,b:DataListProps) => (a.date > b.date ? a : b))
+        const lastOutcome = formatDistanceToNow(parseISO(resultOutcome.date))
+        setlastOutcome(lastOutcome)
+      }
 
-      
       setisLoading(false)
   }
   function calculateSums(){
