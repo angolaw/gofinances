@@ -7,6 +7,7 @@ import { dataKey } from '../Register'
 import { useFocusEffect } from '@react-navigation/core'
 import {ActivityIndicator} from 'react-native'
 import {useTheme} from 'styled-components'
+import {formatDistanceToNow, parseISO} from 'date-fns'
 export interface DataListProps extends TransactionCardProps{
     id: string;
 }
@@ -16,7 +17,10 @@ export function Dashboard(){
   const [incomeSum, setIncomeSum] = useState('')
   const [outcomeSum, setOutcomeSum] = useState('')
   const [balance, setbalance] = useState('')
+  const [lastIncome, setlastIncome] = useState('')
+  const [lastOutcome, setlastOutcome] = useState('')
   const theme = useTheme()
+
   const [highlightData, sethighlightData] = useState<HighlightProps>({} as HighlightProps)
   let incomeSumValue = 0
   let outComeSumValue = 0
@@ -67,8 +71,17 @@ export function Dashboard(){
           style:'currency',
           currency: 'BRL'
         }))   
-      
+        
       setTransactions(transactionsFormatted)
+      //get last income transaction date
+      const resultIncome: DataListProps = transactions.filter((transaction:DataListProps) => transaction.type === 'income').reduce((a:DataListProps,b:DataListProps) => (a.date > b.date ? a : b))
+      const lastIncome = formatDistanceToNow(parseISO(resultIncome.date))
+      setlastIncome(lastIncome)
+      const resultOutcome: DataListProps = transactions.filter((transaction:DataListProps) => transaction.type === 'outcome').reduce((a:DataListProps,b:DataListProps) => (a.date > b.date ? a : b))
+      const lastOutcome = formatDistanceToNow(parseISO(resultOutcome.date))
+      setlastOutcome(lastOutcome)
+
+      
       setisLoading(false)
   }
   function calculateSums(){
@@ -110,9 +123,9 @@ export function Dashboard(){
         </UserWrapper>
       </Header>
       <HighlightCards  >
-        <HighlightCard type="up" title="Entradas" amount={incomeSum} lastTransaction="2 days ago" />
-        <HighlightCard type="down" title="Saídas" amount={outcomeSum} lastTransaction="7 days ago" />
-        <HighlightCard type="total" title="Total" amount={balance} lastTransaction="Today" />
+        <HighlightCard type="up" title="Entradas" amount={incomeSum} lastTransaction={lastIncome} />
+        <HighlightCard type="down" title="Saídas" amount={outcomeSum} lastTransaction={lastOutcome} />
+        <HighlightCard type="total" title="Total" amount={balance} lastTransaction={lastIncome < lastOutcome ? lastIncome : lastOutcome} />
       </HighlightCards>
 
       <Transactions>
