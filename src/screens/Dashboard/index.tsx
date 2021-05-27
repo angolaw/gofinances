@@ -4,7 +4,6 @@ import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard'
 export interface DataListProps extends TransactionCardProps{
     id: string;
-
 }
 export function Dashboard(){
   const data: DataListProps[] = [
