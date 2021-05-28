@@ -9,6 +9,7 @@ import { StatusBar } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native'
 import 'react-native-gesture-handler'
 import { AppRoutes } from './src/routes/app.routes';
+import { Authentication } from './src/screens/Authentication';
 export default function App() {
   const [fontsLoaded] = useFonts({Poppins_400Regular,Poppins_500Medium, Poppins_700Bold})
   if(!fontsLoaded)
@@ -17,7 +18,7 @@ export default function App() {
     <ThemeProvider theme={theme} >
       <NavigationContainer>
         <StatusBar barStyle="light-content" />
-          <AppRoutes/>
+        <Authentication/>
       </NavigationContainer>
     </ThemeProvider>
   );
