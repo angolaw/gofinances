@@ -6,7 +6,11 @@ import  GoogleSvg  from '../../assets/google.svg'
 import {Container, TitleWrapper, Subtitle, Title, Header, Footer, FooterWrapper} from './styles'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { SignInButton } from '../../components/SignInButton'
+import {useAuth} from '../../hooks/auth'
 export function Authentication(){
+  const {user} = useAuth();
+  console.log(user);
+  
   return (
     <Container>
         <Header>
