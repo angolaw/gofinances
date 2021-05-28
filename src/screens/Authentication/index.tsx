@@ -13,11 +13,11 @@ export function Authentication(){
           <TitleWrapper>
               <LogoSvg width={RFValue(50)} height={RFValue(50)}   />
               <Title>Controle suas finanças de forma muito simples</Title>
-
           </TitleWrapper>
           <Subtitle>Faça seu login com uma das contas abaixo</Subtitle>
 
         </Header>
+
         <Footer>
           <FooterWrapper>
             <SignInButton  title="Entrar com o Google" svg={GoogleSvg} />
