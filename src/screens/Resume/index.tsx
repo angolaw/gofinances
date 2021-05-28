@@ -11,6 +11,8 @@ interface CategoryData{
   name: string;
   total: string;
   color:string;
+  percentage: number;
+  percentageFormatted: string;
 }
 
 export function Resume(){
@@ -25,6 +27,8 @@ export function Resume(){
       const data = response ? JSON.parse(response) : []
       setTransactions(data)
       const expenses = data.filter((expense:DataListProps) => expense.type === 'outcome')
+      const expensesTotal = expenses.reduce((total:number, expense:DataListProps) => total + Number(expense.amount), 0);
+      
       const totalByCategory:CategoryData[] = []
       categories.forEach(category => {
         let categorySum = 0;
@@ -38,10 +42,14 @@ export function Resume(){
             currency:'BRL',
             style:'currency'
           })
+          const percentage = (categorySum / expensesTotal*100)
+          const percentageFormatted = `${percentage.toFixed(0)}%`
           totalByCategory.push({
             name: category.name,
             total: total,
-            color: category.color
+            color: category.color,
+            percentage,
+            percentageFormatted,
           })
         }
         
@@ -62,11 +70,12 @@ export function Resume(){
        
       </Header>
         <Content  >
+            
               {totalByCategories.map(category => (
               <HistoryCard 
                 key={category.name}
                 amount={category.total}
-                title={category.name}
+                title={category.name} 
                 color={category.color}
             />
             ))}
