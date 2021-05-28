@@ -7,9 +7,30 @@ import {Container, TitleWrapper, Subtitle, Title, Header, Footer, FooterWrapper}
 import { RFValue } from 'react-native-responsive-fontsize'
 import { SignInButton } from '../../components/SignInButton'
 import {useAuth} from '../../hooks/auth'
+import { Alert } from 'react-native'
 export function Authentication(){
-  const {user} = useAuth();
+  const {user, signInWithGoogle, signInWithApple} = useAuth();
   console.log(user);
+
+  async function handleSignInGoogle(){
+    try{
+      await signInWithGoogle()
+    }catch (error) {
+      console.log(error);
+      Alert.alert('Nao foi possivel conectar com a conta Google')
+      
+    }
+  }
+
+  async function handleSignInApple(){
+    try{
+      await signInWithApple()
+    }catch (error) {
+      console.log(error);
+      Alert.alert('Nao foi possivel conectar com a conta Apple')
+      
+    }
+  }
   
   return (
     <Container>
@@ -24,8 +45,8 @@ export function Authentication(){
 
         <Footer>
           <FooterWrapper>
-            <SignInButton  title="Entrar com o Google" svg={GoogleSvg} />
-            <SignInButton  title="Entrar com a Apple" svg={AppleSvg} />
+            <SignInButton onPress={handleSignInGoogle}  title="Entrar com o Google" svg={GoogleSvg} />
+            <SignInButton onPress={handleSignInApple}  title="Entrar com a Apple" svg={AppleSvg} />
           </FooterWrapper>
         </Footer>
       
