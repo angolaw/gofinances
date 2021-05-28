@@ -6,7 +6,7 @@ import {useFonts, Poppins_400Regular,Poppins_500Medium, Poppins_700Bold} from '@
 import AppLoading from 'expo-app-loading'
 import theme from './src/global/styles/theme' 
 import { StatusBar } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native'
+import {Routes} from './src/routes'
 import 'react-native-gesture-handler'
 import { AppRoutes } from './src/routes/app.routes';
 import { Authentication } from './src/screens/Authentication';
@@ -17,12 +17,10 @@ export default function App() {
     return <AppLoading/>
   return (
     <ThemeProvider theme={theme} >
-      <NavigationContainer>
         <StatusBar barStyle="light-content" />
         <AuthProvider>
-          <Authentication/>
+          <Routes/>
         </AuthProvider>
-      </NavigationContainer>
     </ThemeProvider>
   );
 }

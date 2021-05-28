@@ -8,6 +8,7 @@ import { useFocusEffect } from '@react-navigation/core'
 import {ActivityIndicator} from 'react-native'
 import {useTheme} from 'styled-components'
 import {formatDistanceToNow, parseISO} from 'date-fns'
+import { useAuth } from '../../hooks/auth'
 export interface DataListProps extends TransactionCardProps{
     id: string;
 }
@@ -20,6 +21,7 @@ export function Dashboard(){
   const [lastIncome, setlastIncome] = useState('')
   const [lastOutcome, setlastOutcome] = useState('')
   const theme = useTheme()
+  const {signOut, user} = useAuth()
 
   const [highlightData, sethighlightData] = useState<HighlightProps>({} as HighlightProps)
   let incomeSumValue = 0
@@ -112,13 +114,13 @@ export function Dashboard(){
       <Header>
         <UserWrapper>
           <UserInfo>
-            <Photo source={{uri: 'https://avatars.githubusercontent.com/u/46244572?v=4'}}  />
+            <Photo source={{uri: user.photo}}  />
             <User>
               <UserGreeting>Olá,</UserGreeting>
-              <UserName>Willian</UserName>
+              <UserName>{user.name}</UserName>
             </User>
           </UserInfo>
-          <LogoutButton onPress={() =>{}}  >
+          <LogoutButton onPress={signOut}  >
                       <Icon name="power" />
           </LogoutButton>
         </UserWrapper>
