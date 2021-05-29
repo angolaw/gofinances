@@ -17,6 +17,7 @@ import {addMonths, subMonths, format} from 'date-fns'
 import {ptBR} from 'date-fns/locale'
 import { useFocusEffect } from '@react-navigation/native'
 import { ActivityIndicator } from 'react-native'
+import { useAuth } from '../../hooks/auth'
 
 interface CategoryData{
   name: string;
@@ -32,8 +33,11 @@ export function Resume(){
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date())
-
+  const {user} = useAuth()
   const [isLoading, setIsLoading] = useState(true)
+
+  const dataKey = `@gofinances:transactions_user:${user.id}`
+
   function handleDateChange(action: 'next'| 'prev'){
     setIsLoading(true)
     if(action == 'next'){

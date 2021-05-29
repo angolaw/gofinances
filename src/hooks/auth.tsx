@@ -3,7 +3,6 @@ import React, { createContext, ReactNode, useContext, useState, useEffect } from
 import * as Google from 'expo-google-app-auth'
 import * as Apple from 'expo-apple-authentication'
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { dataKey } from "../screens/Register";
 
 interface AuthProviderProps{
   children: ReactNode;

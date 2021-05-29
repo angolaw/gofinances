@@ -12,6 +12,7 @@ import {yupResolver} from '@hookform/resolvers/yup'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import uuid from 'react-native-uuid'
 import {useNavigation} from '@react-navigation/native'
+import { useAuth } from '../../hooks/auth';
 
 
 interface FormDataProps {
@@ -22,7 +23,6 @@ const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório'),
   amount: Yup.number().required('O valor é obrigatório').typeError('Informe o valor numérico').positive('O valor deve ser maior que zero')
 })
-export const dataKey = '@gofinances:transactions'
 
 export function Register(){
     const [transactionType, setTransactionType] = useState('')
@@ -34,6 +34,7 @@ export function Register(){
     })
     const {control, handleSubmit, reset, formState: {errors}} = useForm({resolver: yupResolver(schema)})
     const navigation = useNavigation()
+    const {user} = useAuth()
     function handleSelectedTransactionType(type:'income' | 'outcome'){
       setTransactionType(type);
       
@@ -59,6 +60,7 @@ export function Register(){
         date: new Date()
       }
       try {
+        const dataKey = `@gofinances:transactions_user:${user.id}`
         const oldData = await AsyncStorage.getItem(dataKey);
         const currentData = oldData ? JSON.parse(oldData) : []
         const newData = [

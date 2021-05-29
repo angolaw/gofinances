@@ -3,9 +3,8 @@ import { Container, Header, Photo, UserInfo, User, UserName, UserGreeting, Logou
 import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { dataKey } from '../Register'
 import { useFocusEffect } from '@react-navigation/core'
-import {ActivityIndicator} from 'react-native'
+import {ActivityIndicator, Text} from 'react-native'
 import {useTheme} from 'styled-components'
 import {formatDistanceToNow, parseISO} from 'date-fns'
 import { useAuth } from '../../hooks/auth'
@@ -22,6 +21,7 @@ export function Dashboard(){
   const [lastOutcome, setlastOutcome] = useState('')
   const theme = useTheme()
   const {signOut, user} = useAuth()
+  const [isEmpty, setIsEmpty] = useState(false)
 
   const [highlightData, sethighlightData] = useState<HighlightProps>({} as HighlightProps)
   let incomeSumValue = 0
@@ -36,9 +36,16 @@ export function Dashboard(){
     outcome: HighlightProps
   }
   async function loadData(){
+    
+      const dataKey = `@gofinances:transactions_user:${user.id}`
+
       const data = await AsyncStorage.getItem(dataKey)
-      const transactions = data ? JSON.parse(data) : []
-      const transactionsFormatted: DataListProps[] = transactions.map((item:DataListProps) =>{
+      
+      const transactions:[] = data ? JSON.parse(data) : []
+      if(transactions.length === 0){
+        setIsEmpty(true)
+      }else{
+        const transactionsFormatted: DataListProps[] = transactions.map((item:DataListProps) =>{
         const amount = Number(item.amount).toLocaleString('pt-BR',{
           style:'currency',
           currency: 'BRL'
@@ -76,7 +83,7 @@ export function Dashboard(){
         
       setTransactions(transactionsFormatted)
       //get last income transaction date
-      if(transactions!== null){
+      if(transactions!!){
         const resultIncome: DataListProps = transactions.filter((transaction:DataListProps) => transaction.type === 'income').reduce((a:DataListProps,b:DataListProps) => (a.date > b.date ? a : b))
         const lastIncome = formatDistanceToNow(parseISO(resultIncome.date))
         setlastIncome(lastIncome)
@@ -86,6 +93,8 @@ export function Dashboard(){
       }
 
       setisLoading(false)
+      }
+      
   }
   function calculateSums(){
   }
@@ -103,8 +112,10 @@ export function Dashboard(){
 
   return (
     <Container>
-      
-      {isLoading 
+      {isEmpty && <Text style={{
+       
+      }} >Nao existem transacoes</Text>}
+      {isLoading
       ? 
       <LoadContainer>
         <ActivityIndicator color={theme.colors.primary} />
