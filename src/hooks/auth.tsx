@@ -9,10 +9,11 @@ interface AuthProviderProps{
   children: ReactNode;
 }
 interface AuthContextData{
-  user:User,
-  signInWithGoogle():Promise<void>,
-  signInWithApple():Promise<void>,
-  signOut():Promise<void>
+  user:User;
+  signInWithGoogle():Promise<void>;
+  signInWithApple():Promise<void>;
+  signOut():Promise<void>;
+  userStorageLoading: boolean;
 }
 interface User{
   id: string;
@@ -64,7 +65,7 @@ function AuthProvider({children}:AuthProviderProps){
           id: String(credentials.user),
           email: credentials.email!,
           name: credentials.fullName!.givenName!,
-          photo: undefined
+          photo: `https://ui-avatars/com/api/?name=${credentials.fullName?.givenName}&length=1`
         }
         await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
         setUser(userLogged)
@@ -98,7 +99,9 @@ function AuthProvider({children}:AuthProviderProps){
       user: user,
       signInWithGoogle,
       signInWithApple,
-      signOut
+      signOut, 
+      userStorageLoading: userLoading
+
     }}>
       {children}
     </AuthContext.Provider>

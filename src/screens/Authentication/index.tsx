@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Image, SvgUri } from 'react-native-svg'
 import  LogoSvg  from '../../assets/finance.svg'
 import  AppleSvg  from '../../assets/apple.svg'
@@ -7,29 +7,38 @@ import {Container, TitleWrapper, Subtitle, Title, Header, Footer, FooterWrapper}
 import { RFValue } from 'react-native-responsive-fontsize'
 import { SignInButton } from '../../components/SignInButton'
 import {useAuth} from '../../hooks/auth'
-import { Alert } from 'react-native'
+import { ActivityIndicator, Alert, Platform } from 'react-native'
+import { useTheme } from 'styled-components'
+
 export function Authentication(){
   const {user, signInWithGoogle, signInWithApple} = useAuth();
-  console.log(user);
+  const [isLoading, setIsLoading] = useState(false)
+  const theme = useTheme()
 
   async function handleSignInGoogle(){
     try{
-      await signInWithGoogle()
+      setIsLoading(true)
+      return await signInWithGoogle()
     }catch (error) {
       console.log(error);
       Alert.alert('Nao foi possivel conectar com a conta Google')
       
+      setIsLoading(false)
     }
+    
   }
 
   async function handleSignInApple(){
     try{
-      await signInWithApple()
+      setIsLoading(true)
+      return await signInWithApple()
     }catch (error) {
       console.log(error);
       Alert.alert('Nao foi possivel conectar com a conta Apple')
       
+      setIsLoading(false)
     }
+    
   }
   
   return (
@@ -46,8 +55,10 @@ export function Authentication(){
         <Footer>
           <FooterWrapper>
             <SignInButton onPress={handleSignInGoogle}  title="Entrar com o Google" svg={GoogleSvg} />
-            <SignInButton onPress={handleSignInApple}  title="Entrar com a Apple" svg={AppleSvg} />
-          </FooterWrapper>
+            {Platform.OS === 'ios' && <SignInButton onPress={handleSignInApple}  title="Entrar com a Apple" svg={AppleSvg} />}
+            
+          </FooterWrapper> 
+        {isLoading && <ActivityIndicator color={theme.colors.shape} size="small"  style={{marginTop:18}}/>}
         </Footer>
       
     </Container>
