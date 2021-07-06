@@ -33,5 +33,5 @@ test("should render title correctly", () => {
   const { getByTestId } = render(<Profile />);
 
   const profileTitle = getByTestId("profile-text");
-  expect(profileTitle).toContain("Perfil");
+  expect(profileTitle.props.children).toContain("Perfil");
 });
