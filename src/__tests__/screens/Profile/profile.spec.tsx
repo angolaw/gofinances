@@ -14,3 +14,17 @@ test("should render TextInput with correct placeholder - SURNAME ", () => {
   const inputName = getByPlaceholderText("Sobrenome");
   expect(inputName.props.placeholder).toBeTruthy();
 });
+test("should render username and surname correctly", () => {
+  const { getByPlaceholderText } = render(<Profile />);
+  const username = getByPlaceholderText("Nome");
+  const surname = getByPlaceholderText("Sobrenome");
+
+  expect(username.props.value).toEqual("Willian");
+  expect(surname.props.value).toEqual("Santana");
+});
+test("should render button with correct testID", () => {
+  const { getByTestId } = render(<Profile />);
+
+  const butao = getByTestId("butao");
+  expect(butao).toBeTruthy();
+});

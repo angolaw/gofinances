@@ -4,9 +4,9 @@ export function Profile() {
   return (
     <View>
       <Text>Perfil</Text>
-      <TextInput placeholder="Nome" autoCorrect={false} />
-      <TextInput placeholder="Sobrenome" autoCorrect={false} />
-      <Button title="Enviar" onPress={() => {}} />
+      <TextInput placeholder="Nome" value="Willian" autoCorrect={false} />
+      <TextInput placeholder="Sobrenome" value="Santana" autoCorrect={false} />
+      <Button testID="butao" title="Enviar" onPress={() => {}} />
     </View>
   );
 }
