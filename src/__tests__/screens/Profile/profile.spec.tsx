@@ -28,3 +28,10 @@ test("should render button with correct testID", () => {
   const butao = getByTestId("butao");
   expect(butao).toBeTruthy();
 });
+
+test("should render title correctly", () => {
+  const { getByTestId } = render(<Profile />);
+
+  const profileTitle = getByTestId("profile-text");
+  expect(profileTitle).toContain("Perfil");
+});
