@@ -13,7 +13,7 @@ export function CategorySelectButton({
   ...rest
 }: CategorySelectProps) {
   return (
-    <Container onPress={onPress} {...rest}>
+    <Container onPress={onPress} {...rest} testID={testID}>
       <Category>{title}</Category>
       <Icon name="chevron-down" />
     </Container>
