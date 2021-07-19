@@ -36,4 +36,5 @@ describe("Profile tests", () => {
     const profileTitle = getByTestId("profile-text");
     expect(profileTitle.props.children).toContain("Perfil");
   });
+  //test if the email placeholder is displayed correctly
 });
