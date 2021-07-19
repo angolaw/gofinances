@@ -11,6 +11,6 @@ const Providers: React.FC = ({ children }) => (
 
 describe("Register Screen", () => {
   it("should open category modal when user click category button", () => {
-    const {} = render(<Register />);
+    const {} = render(<Register />, { wrapper: Providers });
   });
 });
