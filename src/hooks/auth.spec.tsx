@@ -1,5 +1,12 @@
+import { renderHook } from "@testing-library/react-hooks";
 import { AuthProvider, useAuth } from "./auth";
 
 describe("Auth Hook", () => {
-  it("should be able to sign in with existing google account", () => {});
+  it("should be able to sign in with existing google account", () => {
+    const { result } = renderHook(() => useAuth(), {
+      wrapper: AuthProvider,
+    });
+    result.current.signInWithGoogle();
+    expect(result.current.user).toBeTruthy();
+  });
 });
