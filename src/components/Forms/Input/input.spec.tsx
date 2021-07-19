@@ -25,6 +25,7 @@ describe("input component", () => {
       }
     );
     const inputComponent = getByTestId("input-email");
+    //style is a vector
     expect(inputComponent.props.style[0].borderColor).toEqual("#e83f5b");
     // expect border width to be 2
     expect(inputComponent.props.style[0].borderWidth).toEqual(2);
