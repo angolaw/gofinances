@@ -29,4 +29,12 @@ describe("Auth Hook", () => {
     // expect email to be equal to w0ken0ne@gmail.com
     expect(result.current.user.email).toEqual("w0ken0ne@gmail.com");
   });
+  // user should not be authenticate if he cancels dialog
+  it("should not be able to sign in with google account", async () => {
+    const { result } = renderHook(() => useAuth(), {
+      wrapper: AuthProvider,
+    });
+    await act(() => result.current.signInWithGoogle());
+    expect(result.current.user).not.toHaveProperty("id");
+  });
 });
