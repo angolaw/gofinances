@@ -1,25 +1,22 @@
 import { renderHook, act } from "@testing-library/react-hooks";
 import { AuthProvider, useAuth } from "./auth";
-
+import { mocked } from "ts-jest/utils";
+import { logInAsync } from "expo-google-app-auth";
 //mock auth by google with jest
-jest.mock("expo-google-app-auth", () => {
-  return {
-    logInAsync: () => {
-      return {
-        type: "success",
-        user: {
-          id: "any",
-          email: "w0ken0ne@gmail.com",
-          name: "Willian S.",
-          photoURL: "any_photo",
-        },
-      };
-    },
-  };
-});
+jest.mock("expo-google-app-auth");
 
 describe("Auth Hook", () => {
   it("should be able to sign in with existing google account", async () => {
+    const googleMocked = mocked(logInAsync);
+    googleMocked.mockReturnValue({
+      type: "success",
+      user: {
+        id: "any",
+        email: "w0ken0ne@gmail.com",
+        name: "Willian S.",
+        photoURL: "any_photo",
+      },
+    });
     const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     });
@@ -31,6 +28,12 @@ describe("Auth Hook", () => {
   });
   // user should not be authenticate if he cancels dialog
   it("should not be able to sign in with google account", async () => {
+    const cancelMocked = mocked(logInAsync);
+    cancelMocked.mockReturnValue({
+      type: "cancel",
+      user: {},
+    });
+
     const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     });
