@@ -8,6 +8,11 @@ jest.mock("expo-google-app-auth");
 describe("Auth Hook", () => {
   it("should be able to sign in with existing google account", async () => {
     const googleMocked = mocked(logInAsync as any);
+    // if is the only mock on test, it will be used by ALL other tests
+    /** 
+     therefore, each test should have its own mock definition to not be influenced
+     by only one place
+    */
     googleMocked.mockReturnValue({
       type: "success",
       user: {
